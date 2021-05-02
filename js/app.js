@@ -68,7 +68,7 @@ Person.prototype.render = function() {
             data.textContent = getRandomInt(2, 8);
             sum = sum + parseInt(data.textContent);
             this.total.push(parseInt(data.textContent));
-            console.log(this.total);
+            // console.log(this.total);
         } else if (i == 14) {
             data.textContent = sum;
         }
@@ -91,11 +91,12 @@ function submition(event) {
     console.log(name);
     let age = parseInt(event.target.ages.value);
     let gender = event.target.genders.value;
-
     let Person5 = new Person(name, age, gender);
+
     table.deleteRow(allElement.length);
     console.log(name);
     Person5.render();
+    localStorageFunction();
     footer();
 }
 
@@ -117,9 +118,36 @@ function footer() {
     theEl3.textContent = y2;
 }
 
+function localStorageFunction() {
+    let localValues = JSON.stringify(allElement);
+    localStorage.setItem('valuse', localValues);
+    console.log(localValues);
+}
+
+// function getLocal() {
+//     let data = localStorage.getItem('values');
+//     allElement = JSON.parse(data);
+//     console.log(data);
+// }
 
 Person1.render();
 Person2.render();
 Person3.render();
 Person4.render();
 footer();
+// getLocal();
+// function saveToLs() {
+
+//     let arrStr = JSON.stringify(BusMall.allElements);
+
+//     localStorage.setItem('coffeeSaved', arrStr);
+
+//     console.log(arrStr);
+// }
+
+// function gettingLocalStorage() {
+//     let data = localStorage.getItem('coffeeSaved');
+//     if (data) {
+//         BusMall.allElements = JSON.parse(data);
+//     } // localStorage.removeItem('imageTimes');
+// }
