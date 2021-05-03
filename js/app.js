@@ -78,26 +78,33 @@ Person.prototype.render = function() {
 
 }
 
-// Person5.render();
 
 let userInput = document.getElementById('newForm');
 userInput.addEventListener('submit', submition);
 
+let someData = document.getElementById('someData');
 
 function submition(event) {
     event.preventDefault();
 
     let name = event.target.names.value;
-    console.log(name);
     let age = parseInt(event.target.ages.value);
     let gender = event.target.genders.value;
+
     let Person5 = new Person(name, age, gender);
 
     table.deleteRow(allElement.length);
     console.log(name);
     Person5.render();
+
     localStorageFunction();
+    getLocal();
     footer();
+
+    let datas = document.createElement('li');
+    someData.appendChild(datas);
+    datas.textContent = `${allElement.Name} is ${'Gender'} and has ${'Age'} years old`;
+
 }
 
 function footer() {
@@ -124,17 +131,20 @@ function localStorageFunction() {
     console.log(localValues);
 }
 
-// function getLocal() {
-//     let data = localStorage.getItem('values');
-//     allElement = JSON.parse(data);
-//     console.log(data);
-// }
+function getLocal() {
+    let data = localStorage.getItem('valuse');
+    Person.allElement = JSON.parse(data);
+    console.log(data);
+}
 
 Person1.render();
 Person2.render();
 Person3.render();
 Person4.render();
 footer();
+
+
+
 // getLocal();
 // function saveToLs() {
 
@@ -151,3 +161,13 @@ footer();
 //         BusMall.allElements = JSON.parse(data);
 //     } // localStorage.removeItem('imageTimes');
 // }
+
+// declaration (let x;)
+// initialization(=20;)
+// reassign;
+
+// let x=20;
+// x=30;
+
+// var x=20;// global
+// let x=20;// if we declare it outside it will be global. but if we declare it inside curly bracit {} it will be locally.
