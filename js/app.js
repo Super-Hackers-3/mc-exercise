@@ -1,13 +1,21 @@
 'use strict';
 
+let firstImage = document.getElementById('firstImage')
+
+let userInput = document.getElementById('newForm');
+let someData = document.getElementById('someData');
+
 let allElement = [];
 
-function Person(name, age, gender) {
+function Person(name, age, gender, Box, image, path) {
     this.name = name;
     this.age = age;
     this.hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', 'Daily Location Total'];
     this.gender = gender;
+    this.image = image;
+    this.path = path;
     this.total = [];
+    this.Box = Box;
     allElement.push(this);
     console.log(allElement);
 }
@@ -16,10 +24,17 @@ function Person(name, age, gender) {
 //     console.log(this.perName);
 // }
 
-let Person1 = new Person('john', 28, 'male');
+let Person1 = new Person('john', 28, 'male', ' true', 'ibrahim', '../images/ibrahim.jpg');
 let Person2 = new Person('jahn', 64, 'male');
 let Person3 = new Person('yamen', 12, 'femal');
 let Person4 = new Person('abed', 15, 'male');
+
+// firstImage.src = allElement[0].path;
+firstImage.src = "../images/pen" + ".jpg";
+// var src = document.getElementById("gamediv");
+// var img = document.createElement("img");
+// img.src = "img/eqp/"+this.apparel+"/"+this.facing+"_idle.png";
+// src.appendChild(img);
 
 let container = document.getElementById('newTable');
 let table = document.createElement('table');
@@ -65,8 +80,8 @@ Person.prototype.render = function() {
         secondRaws.appendChild(data);
 
         if (i != 14) {
-            data.textContent = getRandomInt(2, 8);
-            sum = sum + parseInt(data.textContent);
+            data.textContent = getRandomInt(2, 8); //'2545'
+            sum = sum + parseInt(data.textContent); //2545
             this.total.push(parseInt(data.textContent));
             // console.log(this.total);
         } else if (i == 14) {
@@ -76,13 +91,27 @@ Person.prototype.render = function() {
     }
     x++;
 
+    while (this.Box == true || this.Box == false) {
+
+        if (this.Box == true) {
+            let ele = document.createElement('li');
+            someData.appendChild(ele);
+            ele.textContent = 'You selected the checkbox';
+            break;
+        } else {
+            let ele = document.createElement('li');
+            someData.appendChild(ele);
+            ele.textContent = 'You didn\'t select the checkbox';
+
+            break;
+
+        }
+    }
 }
 
 
-let userInput = document.getElementById('newForm');
-userInput.addEventListener('submit', submition);
 
-let someData = document.getElementById('someData');
+userInput.addEventListener('submit', submition);
 
 function submition(event) {
     event.preventDefault();
@@ -90,22 +119,24 @@ function submition(event) {
     let name = event.target.names.value;
     let age = parseInt(event.target.ages.value);
     let gender = event.target.genders.value;
+    let Box = event.target.checkbox.checked;
 
-    let Person5 = new Person(name, age, gender);
-
+    let Person5 = new Person(name, age, gender, Box);
+    console.log(allElement.length);
     table.deleteRow(allElement.length);
-    console.log(name);
+    console.log(Person5.name);
+
     Person5.render();
-
     localStorageFunction();
-    getLocal();
+    // getLocal();
+
+
+    // let datas = document.createElement('li');
+    // someData.appendChild(datas);
+    // datas.textContent = 'hiiii';
     footer();
-
-    let datas = document.createElement('li');
-    someData.appendChild(datas);
-    datas.textContent = `${allElement.Name} is ${'Gender'} and has ${'Age'} years old`;
-
 }
+getLocal();
 
 function footer() {
     let footerRaw = document.createElement('tr');
@@ -125,49 +156,49 @@ function footer() {
     theEl3.textContent = y2;
 }
 
+
 function localStorageFunction() {
     let localValues = JSON.stringify(allElement);
     localStorage.setItem('valuse', localValues);
     console.log(localValues);
+
 }
 
 function getLocal() {
     let data = localStorage.getItem('valuse');
-    Person.allElement = JSON.parse(data);
+    let contant = JSON.parse(data);
     console.log(data);
+    // contant.render();
+    if (contant) {
+        for (let i = 4; i < contant.length; i++) {
+            let reIncetants = new Person(contant[i].name, contant[i].age, contant[i].gender, contant[i].Box);
+            reIncetants.render();
+            console.log('Resintatiate', reIncetants);
+        }
+    }
 }
+
 
 Person1.render();
 Person2.render();
 Person3.render();
 Person4.render();
+
 footer();
 
-
-
-// getLocal();
-// function saveToLs() {
-
-//     let arrStr = JSON.stringify(BusMall.allElements);
-
-//     localStorage.setItem('coffeeSaved', arrStr);
-
-//     console.log(arrStr);
+// function save() {
+//     let localValues = JSON.stringify(allElement);
+//     localStorage.setItem('value', localValues);
 // }
 
-// function gettingLocalStorage() {
-//     let data = localStorage.getItem('coffeeSaved');
-//     if (data) {
-//         BusMall.allElements = JSON.parse(data);
-//     } // localStorage.removeItem('imageTimes');
+// function get() {
+//     let data = localStorage.getItem('value');
+//     let content = JSON.parse(data);
+//     if (content) {
+//         for (let i = 0; i < content.length; i++) {
+//             let reInstantiation = new Person(content[i].name, content[i].age, content[i].gender);
+//             reInstantiation.render();
+//             console.log('reinst', reInstantiation);
+//         }
+//     }
 // }
-
-// declaration (let x;)
-// initialization(=20;)
-// reassign;
-
-// let x=20;
-// x=30;
-
-// var x=20;// global
-// let x=20;// if we declare it outside it will be global. but if we declare it inside curly bracit {} it will be locally.
